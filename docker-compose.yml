@@ -1,31 +1,20 @@
 version: "3.8"
-
 services:
   backend:
     build: ./backend
-    container_name: vocabtai-backend
     depends_on:
       - db
-    expose:
-      - "8080"
-    networks:
-      - app-network
-
+    ports:
+      - "8080:8080"
   frontend:
     build: ./todolist
-    container_name: vocabtai-frontend
     env_file:
       - ./todolist/.env
-    depends_on:
-      - backend
-    expose:
-      - "80"
-    networks:
-      - app-network
+    ports:
+      - "3000:80"
 
   db:
     image: postgres:15
-    container_name: vocabtai-db
     restart: always
     environment:
       POSTGRES_DB: todo_app
@@ -33,12 +22,9 @@ services:
       POSTGRES_PASSWORD: 141421
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
 
   nginx:
     image: nginx:alpine
-    container_name: vocabtai-nginx
     ports:
       - "80:80"
     volumes:
@@ -46,11 +32,6 @@ services:
     depends_on:
       - frontend
       - backend
-    networks:
-      - app-network
 
 volumes:
-  postgres_data:
-
-networks:
-  app-network:
+  postgres_data: 
