@@ -1,5 +1,5 @@
 # --- Stage 1: Build ứng dụng và bung .jar ---
-FROM maven:3.9.4-openjdk-17 AS build
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy source code vào image
